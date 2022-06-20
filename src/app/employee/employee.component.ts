@@ -10,7 +10,12 @@ export interface IEmployee {
   StarTimeUtc: string,
   EndTimeUtc: string,
   EntryNotes: string,
-  DeletedOn: string
+  DeletedOn: string,
+  Difference:number
+}
+export interface IEmployeeHours{
+  EmployeeName: string,
+  Hours: number,
 }
 
 @Component({
@@ -22,7 +27,11 @@ export interface IEmployee {
  export class EmployeeComponent implements OnInit {
 
  employees:IEmployee[]=[];
- names: string[] = [];
+
+ uniqueEmployees:IEmployee[]=[]; //ovako je procitalo direktno iz apija
+employeesHours:IEmployeeHours[]=[]; //ovde ces upisati parove koji ce se prikazati u tabeli
+
+
   readonly APIUrl='https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==';
 
   constructor(private httpClient:HttpClient ) {
@@ -30,6 +39,7 @@ export interface IEmployee {
 
   ngOnInit(): void {
   this.getEmployees();
+
  
   }
 
@@ -37,7 +47,23 @@ export interface IEmployee {
      this.httpClient.get<IEmployee[]>(this.APIUrl).subscribe(response => {
       console.log(response);
       this.employees=response;
-    });
+      
+  for(let e of this.employees){
+      let startDate=new Date(e.StarTimeUtc);
+      let endDate=new Date(e.EndTimeUtc);
+      let diff = endDate.valueOf() - startDate.valueOf();
+      let diffInHours = diff/1000/60/60; 
+      e.Difference=diffInHours;
+      
+    }
+  });
+   
+  }
+
+  filter(){
+    for(let e in this.employees){
+     console.log(e);
+    }
   }
 
  
