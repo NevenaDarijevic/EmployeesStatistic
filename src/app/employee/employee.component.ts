@@ -23,7 +23,7 @@ export interface IEmployee {
 
  export class EmployeeComponent implements OnInit {
 
- employees=[];
+ employees:IEmployee[]=[];
   readonly APIUrl='https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==';
 
   constructor( private httpClient:HttpClient) {
@@ -34,7 +34,7 @@ export interface IEmployee {
   }
 
   getEmployees() {
-     this.httpClient.get<any>(this.APIUrl).subscribe(response => {
+     this.httpClient.get<IEmployee[]>(this.APIUrl).subscribe(response => {
       console.log(response);
       this.employees=response;
     });
