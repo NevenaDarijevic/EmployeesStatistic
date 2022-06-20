@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
-
 
 export interface IEmployee {
   Id: string,
@@ -26,63 +23,70 @@ export interface IEmployeeHours{
 
  export class EmployeeComponent implements OnInit {
 
- employees:IEmployee[]=[];//ovako je procitalo direktno iz apija
-
- uniqueEmployees:string[]=[]; 
-employeesHours:IEmployeeHours[]=[]; //ovde ces upisati parove koji ce se prikazati u tabeli
+ employees:IEmployee[]=[];//from API
+ uniqueEmployees:string[]=[]; //for unique names
+ employeesHours:IEmployeeHours[]=[]; //for table content
 
 
   readonly APIUrl='https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==';
 
   constructor(private httpClient:HttpClient ) {
-  }
-
+   }
   ngOnInit(): void {
   this.getEmployees();
-
- 
   }
 
+  //Get Employess from API and make content for table
   getEmployees() {
     //fetch
      this.httpClient.get<IEmployee[]>(this.APIUrl).subscribe(response => {
       console.log(response);
       this.employees=response;
-      
-      //calculate time difference for every object- every record for every employee
-     for(let e of this.employees){
+      this.calculateDifferenceForEmployee();
+      this.findUniqueEmployeeNames();
+      this.pushDataIntoEmployeeHoursArray(); 
+      this.sort();
+    }
+    )}
+ //Calculate time difference for every object- every record for every employee
+  calculateDifferenceForEmployee(){
+    for(let e of this.employees){
       let startDate=new Date(e.StarTimeUtc);
       let endDate=new Date(e.EndTimeUtc);
       let diff = endDate.valueOf() - startDate.valueOf();
       let diffInHours = diff/1000/60/60; //to be in hours 
       e.Difference=diffInHours;
       }
-    //this code return an array of unique names
-      this.uniqueEmployees = [... new Set(this.employees.map(data => data.EmployeeName))];
+  }
+  //Return an array of unique names
+  findUniqueEmployeeNames(){
+    this.uniqueEmployees = [... new Set(this.employees.map(data => data.EmployeeName))];
+  }
+
+  //Calculate data for table content
+  pushDataIntoEmployeeHoursArray(){
       //set to new array values for employees names
       for(let i=0;i<this.uniqueEmployees.length;i++){
-       let emp={EmployeeName: this.uniqueEmployees[i], Hours:0};
-       this.employeesHours.push(emp);
+        let emp={EmployeeName: this.uniqueEmployees[i], Hours:0};
+        this.employeesHours.push(emp);
       }
-     //now I got my array half ready for table content
 
-     //To get sum of time for each employee
-     for(let eu of this.employeesHours){
+      //To get sum of time for each employee
+      for(let eu of this.employeesHours){
       let hours=0;
       for(let e of this.employees){
         if(e.EmployeeName===eu.EmployeeName){
           hours+=e.Difference;
         }
-       }
-       eu.Hours=Math.round(hours);
+        }
+         eu.Hours=Math.round(hours);
+      }  
 
-     }
-     
-      
-  }
-     )
-  }
+    }
 
-
-
- }
+    //Sort employees by time
+    sort(){
+      this.employeesHours.sort((a, b) => (a.Hours > b.Hours ? -1 : 1));
+    }
+}
+ 
