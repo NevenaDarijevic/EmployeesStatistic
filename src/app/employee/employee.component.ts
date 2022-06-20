@@ -26,9 +26,9 @@ export interface IEmployeeHours{
 
  export class EmployeeComponent implements OnInit {
 
- employees:IEmployee[]=[];
+ employees:IEmployee[]=[];//ovako je procitalo direktno iz apija
 
- uniqueEmployees:IEmployee[]=[]; //ovako je procitalo direktno iz apija
+ uniqueEmployees:string[]=[]; 
 employeesHours:IEmployeeHours[]=[]; //ovde ces upisati parove koji ce se prikazati u tabeli
 
 
@@ -44,28 +44,45 @@ employeesHours:IEmployeeHours[]=[]; //ovde ces upisati parove koji ce se prikaza
   }
 
   getEmployees() {
+    //fetch
      this.httpClient.get<IEmployee[]>(this.APIUrl).subscribe(response => {
       console.log(response);
       this.employees=response;
       
-  for(let e of this.employees){
+      //calculate time difference for every object- every record for every employee
+     for(let e of this.employees){
       let startDate=new Date(e.StarTimeUtc);
       let endDate=new Date(e.EndTimeUtc);
       let diff = endDate.valueOf() - startDate.valueOf();
-      let diffInHours = diff/1000/60/60; 
+      let diffInHours = diff/1000/60/60; //to be in hours 
       e.Difference=diffInHours;
+      }
+    //this code return an array of unique names
+      this.uniqueEmployees = [... new Set(this.employees.map(data => data.EmployeeName))];
+      //set to new array values for employees names
+      for(let i=0;i<this.uniqueEmployees.length;i++){
+       let emp={EmployeeName: this.uniqueEmployees[i], Hours:0};
+       this.employeesHours.push(emp);
+      }
+     //now I got my array half ready for table content
+
+     //To get sum of time for each employee
+     for(let eu of this.employeesHours){
+      let hours=0;
+      for(let e of this.employees){
+        if(e.EmployeeName===eu.EmployeeName){
+          hours+=e.Difference;
+        }
+       }
+       eu.Hours=Math.round(hours);
+
+     }
+     
       
-    }
-  });
-   
+  }
+     )
   }
 
-  filter(){
-    for(let e in this.employees){
-     console.log(e);
-    }
-  }
 
- 
 
-}
+ }
