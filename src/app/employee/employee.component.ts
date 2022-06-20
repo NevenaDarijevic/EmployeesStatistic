@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-//import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-//import { IEmployee } from './employees';
 
 
 
@@ -24,13 +22,15 @@ export interface IEmployee {
  export class EmployeeComponent implements OnInit {
 
  employees:IEmployee[]=[];
+ names: string[] = [];
   readonly APIUrl='https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==';
 
-  constructor( private httpClient:HttpClient) {
+  constructor(private httpClient:HttpClient ) {
   }
 
   ngOnInit(): void {
   this.getEmployees();
+ 
   }
 
   getEmployees() {
@@ -39,5 +39,7 @@ export interface IEmployee {
       this.employees=response;
     });
   }
+
  
+
 }

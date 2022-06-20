@@ -1,0 +1,36 @@
+*{
+   
+    padding: none;
+
+}
+.table-column{
+    background-color: rgb(208, 206, 206);
+   padding: none;
+   text-align: center;
+   border: 2px solid rgb(175, 173, 173);
+}
+
+.table {
+    border-collapse: collapse;
+    border: 2px solid rgb(175, 173, 173);
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.tbody{
+    border: 2px solid rgb(175, 173, 173);
+}
+.table thead tr {
+    background-color: rgb(175, 173, 173);
+    color:black;
+    text-align: left;
+    border: 2px solid rgb(175, 173, 173);
+}
+.table th,
+.table td {
+    padding: 12px 15px;
+    border: 2px solid rgb(175, 173, 173);
+}
+

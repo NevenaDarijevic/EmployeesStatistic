@@ -1,2 +1,20 @@
 <h1>List of Employees</h1>
-         
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-column">Name</th>
+                <th class="table-column">Total Time in Month</th>
+                <th class="table-column">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of employees">
+                <td text-align="left"><span>{{e.EmployeeName}}</span></td>
+                <td text-align="left"> </td>
+                <td text-align="left"> </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
