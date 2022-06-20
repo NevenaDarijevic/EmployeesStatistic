@@ -1,6 +1,6 @@
 <h1>List of Employees</h1>
 <div class="container">
-    <table class="table">
+    <table class="table" id="table">
         <thead>
             <tr>
                 <th class="table-column">Name</th>
@@ -10,11 +10,19 @@
         </thead>
         <tbody>
             <tr *ngFor="let e of employeesHours">
-                <td text-align="left"><span>{{e.EmployeeName}}</span></td>
-                <td text-align="left"><span>{{e.Hours}} hrs</span> </td>
-                <td text-align="left"><button><a href="#">Edit</a></button> </td>
+                <td id="row"><span>{{e.EmployeeName}}</span></td>
+                <td id="row"><span>{{e.Hours}}</span> </td>
+                <td><button><a href="#">Edit</a></button> </td>
             </tr>
         </tbody>
     </table>
-
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+</div>
+<div id="chart">
+    <h2>Chart</h2>
+    <canvas id="employeesChart" width="400" height="400"></canvas>
 </div>

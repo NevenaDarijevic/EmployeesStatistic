@@ -1,39 +1,59 @@
-*{
-   
+* {
+
     padding: none;
 
 }
-.table-column{
-    background-color: rgb(208, 206, 206);
-   padding: none;
-   text-align: center;
-   border: 2px solid rgb(175, 173, 173);
-}
 
+.table-column {
+    background-color: rgb(208, 206, 206);
+    padding: none;
+    text-align: center;
+    border: 2px solid rgb(175, 173, 173);
+}
+h1{
+    color: 8E43BF;
+}
+h2{
+    color:B760EF;
+}
 .table {
     border-collapse: collapse;
     border: 2px solid rgb(175, 173, 173);
-    margin: 25px 0;
+    margin-left: 500px ;
+    margin-right: 500px ;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+    min-width: 500px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.tbody{
+
+.tbody {
     border: 2px solid rgb(175, 173, 173);
 }
+
 .table thead tr {
     background-color: rgb(175, 173, 173);
-    color:black;
+    color: black;
     text-align: left;
     border: 2px solid rgb(175, 173, 173);
 }
+
 .table th,
 .table td {
     padding: 12px 15px;
     border: 2px solid rgb(175, 173, 173);
 }
-button{
+
+button {
     border: none;
     background-color: white;
+}
+
+#chart {
+    display: block;
+    width: 500px;
+    height: 500px;
+    margin-left: 500px ;
+    margin-right: 500px ;
+    margin-bottom: 100px;
 }
