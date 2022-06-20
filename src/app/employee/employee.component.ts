@@ -31,6 +31,8 @@ export class EmployeeComponent implements OnInit {
   employeesHours: IEmployeeHours[] = []; //for table content
   times: number[] = [];
   sortedEmployees: string[] = [];
+  percentages: string[] = [];
+  sumOfTimes: number = 0;
   PieChart = [];
 
   readonly APIUrl = 'https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==';
@@ -38,6 +40,7 @@ export class EmployeeComponent implements OnInit {
   constructor(private httpClient: HttpClient) {
   }
   ngOnInit(): void {
+
     this.getEmployees();
   }
 
@@ -52,7 +55,8 @@ export class EmployeeComponent implements OnInit {
       this.pushDataIntoEmployeeHoursArray();
       this.sortEmployees();
       this.coloring();
-      this.createChart()
+      this.createChart();
+      this.convertToPercentages();
     }
     )
   }
@@ -90,6 +94,8 @@ export class EmployeeComponent implements OnInit {
       }
       eu.Hours = Math.round(hours);
       this.times.push(eu.Hours);
+      this.sumOfTimes += eu.Hours;
+
     }
 
   }
@@ -97,12 +103,13 @@ export class EmployeeComponent implements OnInit {
   //Sort employees by time
   sortEmployees() {
     this.employeesHours.sort((a, b) => (a.Hours > b.Hours ? -1 : 1));
+    this.sumOfTimes -= this.employeesHours[(this.employeesHours.length - 1)].Hours;
     this.employeesHours.pop(); //because name is null
     this.times.sort((a, b) => (a > b ? -1 : 1));
     for (let i = 0; i < this.employeesHours.length; i++) {
       this.sortedEmployees.push(this.employeesHours[i].EmployeeName);
     }
-
+    this.times.pop();
   }
 
 
@@ -110,18 +117,27 @@ export class EmployeeComponent implements OnInit {
   coloring() {
 
   }
+
+  //Convert times to %
+  convertToPercentages() {
+    for (let i = 0; i < this.times.length; i++) {
+      this.percentages.push(Math.round((this.times[i] * 100) / this.sumOfTimes)+"% ");
+    }
+  }
+
+
   createChart() {
+
     let ctx = document.getElementById('employeesChart');
 
     const employeesChart = new Chart('employeesChart', {
+
       type: 'pie',
       data: {
-       // labels: [this.sortedEmployees[0], this.sortedEmployees[1], this.sortedEmployees[2], this.sortedEmployees[3],],
-       labels:this.sortedEmployees,
+        labels: this.sortedEmployees,
         datasets: [{
           label: 'Chart',
-          //data: [this.times[0], this.times[1], this.times[2], this.times[3]],
-          data: this.times,
+          data: this.percentages,
           backgroundColor: [
             'rgb(160, 56, 34 )',
             'rgb(199, 110, 243)',
@@ -133,14 +149,19 @@ export class EmployeeComponent implements OnInit {
             'rgb(255, 245, 98 )',
             'rgb(167, 56, 34 )',
             'rgb(193, 110, 243)',
-          
-           
-
           ],
           borderWidth: 1
         }]
-      },
-      options: {
+      }, options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: 'rgb(122, 147, 205)'
+
+            }
+          }
+        },
         scales: {
           y: {
             beginAtZero: true
@@ -150,4 +171,5 @@ export class EmployeeComponent implements OnInit {
     });
   }
 }
+
 
