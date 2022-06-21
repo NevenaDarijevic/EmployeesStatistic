@@ -64,10 +64,8 @@ export class EmployeeComponent implements OnInit {
       this.findUniqueEmployeeNames();
       this.pushDataIntoEmployeeHoursArray();
       this.sortEmployees();
-      this.coloring();
       this.createChart();
       this.convertToPercentages();
-      //this.GetCellValues();
     }
     )
   }
@@ -124,76 +122,12 @@ export class EmployeeComponent implements OnInit {
   }
 
 
-  //Set color of row based on time
-  coloring() {
-
-  }
-
   //Convert times to %
   convertToPercentages() {
     for (let i = 0; i < this.times.length; i++) {
       this.percentages.push(Math.round((this.times[i] * 100) / this.sumOfTimes) + "% ");
     }
   }
-
-
-/*
-  GetCellValues() {
-    var cell = document.getElementsByTagName("td"); 
-    var i = 0;
-    while(cell[i] != undefined){
-        alert(cell[i].innerHTML); //do some alert for test
-        i++;
-        }
-    //let rows =   document.getElementsByTagName('tr');
-   // const array = Array.prototype.slice.call(rows)
-  // console.log(rows);
-  //  for(let i in rows){
-    //  console.log(i.valueOf);
- // }
-    //console.log(rows);
-   // let arr = Array.prototype.slice.call( rows );
-    //console.log(arr);
-  //  for (let i = 1; i < rows.length; i++) {
-  // let hoursCell= rows[i].getElementsByTagName('__ngContext__');
-//console.log(hoursCell);
-  // console.log(hoursCell);
-      /*
-      let cells=rows[i].getElementsByTagName('td');
-      console.log(cells[1]);
-      console.log(typeof(cells[1].innerText));
-      console.log(cells);
-      */
-      /*
-      console.log("ovde je sad uhvacno koliki je text");
-      console.log(rows[i].cells[1].innerText);
-      this.stringsOfInnerText.push(rows[i].cells[1].innerText);
-      if (parseInt(rows[i].cells[1].innerText)<100){
- 
-       rows[i].id = "less";
-       }else{
-        rows[i].id = "not-less"; 
-       }
-     // let cells = rows[i].getElementsByTagName('td');
-            //console.log(cells);
-            
-            //if (parseInt(cells[1].innerText) <100){
-           // console.log(parseInt(cells[1].innerText))
-           // rows[i].id = "less";
-            
-          //  }
-            
-
-           // else
-             //   rows[i].id = "not-less";  
-}
-console.log(this.stringsOfInnerText);
-*/
-
-//}
-//console.log(this.stringsOfInnerText);
-//}
-
 
 
   createChart() {
