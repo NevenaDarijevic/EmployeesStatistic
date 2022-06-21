@@ -9,9 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let e of employeesHours">
-                <td id="row"><span>{{e.EmployeeName}}</span></td>
-                <td id="row"><span>{{e.Hours}}</span> hrs </td>
+            <tr *ngFor="let e of employeesHours" [ngClass]="e.Hours > 100 ? 'not-less' : 'less'" >
+                <td>{{e.EmployeeName}}</td>
+                <td >{{ e.Hours }} hrs</td>
                 <td><button><a href="#">Edit</a></button> </td>
             </tr>
         </tbody>
