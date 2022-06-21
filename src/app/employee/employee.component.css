@@ -1,7 +1,5 @@
 * {
-
     padding: none;
-
 }
 
 .table-column {
@@ -10,17 +8,20 @@
     text-align: center;
     border: 2px solid rgb(175, 173, 173);
 }
-h1{
+
+h1 {
     color: 8E43BF;
 }
-h2{
-    color:B760EF;
+
+h2 {
+    color: B760EF;
 }
+
 .table {
     border-collapse: collapse;
     border: 2px solid rgb(175, 173, 173);
-    margin-left: 500px ;
-    margin-right: 500px ;
+    margin-left: 500px;
+    margin-right: 500px;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 500px;
@@ -45,21 +46,22 @@ h2{
 
 button {
     border: none;
-    background-color:transparent;
+    background-color: transparent;
 }
 
 #chart {
     display: block;
     width: 500px;
     height: 500px;
-    margin-left: 500px ;
-    margin-right: 500px ;
+    margin-left: 500px;
+    margin-right: 500px;
     margin-bottom: 100px;
 }
 
-.less{
-   background-color: rgb(231, 117, 117);
+.less {
+    background-color: rgb(231, 117, 117);
 }
-.not-less{
-   background-color: white;
+
+.not-less {
+    background-color: white;
 }
